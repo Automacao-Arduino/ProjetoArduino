@@ -33,6 +33,15 @@ Componentes basicos podem Ser achados dentro da Site do React e utilizando tambe
 
 https://react.dev/reference/react/Component
 
+
+
 https://ant.design/components/overview
 
+## Utilizando os componentes AntDesign
 
+```
+npm install antd
+```
+```
+npm install antd-style
+```
