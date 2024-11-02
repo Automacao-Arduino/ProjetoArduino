@@ -1,36 +1,27 @@
-// src/device/device.service.ts
 import { Injectable } from '@nestjs/common';
 import { SerialPort } from 'serialport';
 import { ReadlineParser } from '@serialport/parser-readline';
 
 @Injectable()
 export class DeviceService {
-  private port: SerialPort | null = null;
+  private port: SerialPort;
   private deviceState: string = 'off';
 
   constructor() {
-    // Removemos a inicialização da porta para evitar o erro sem o Arduino conectado.
+    // Configura a porta serial para se comunicar com o Arduino
+    this.port = new SerialPort({ path: 'COM3', baudRate: 9600 }); // Altere 'COM3' para a porta correta do Arduino
+    const parser = this.port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
+
+    // Escutar dados recebidos do Arduino
+    parser.on('data', (data: string) => {
+      console.log('Dados recebidos do Arduino:', data);
+      this.deviceState = data; // Atualiza o estado do dispositivo (opcional)
+    });
   }
 
-  // Função para inicializar a porta (chame esta função quando o Arduino estiver conectado)
-  private initializePort() {
-    if (!this.port) {
-      this.port = new SerialPort({ path: 'COM3', baudRate: 9600 }); // Ajuste a porta conforme necessário
-      const parser = this.port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
-
-      parser.on('data', (data: string) => {
-        console.log('Dados recebidos do Arduino:', data);
-        this.deviceState = data;
-      });
-    }
-  }
-
+  // Função para enviar comandos ao Arduino
   async sendCommand(command: string): Promise<string> {
-    this.initializePort(); // Inicializa a porta se ainda não estiver inicializada
     return new Promise((resolve, reject) => {
-      if (!this.port) {
-        return reject('Porta serial não inicializada');
-      }
       this.port.write(command + '\n', (err) => {
         if (err) {
           return reject(`Erro ao enviar comando: ${err.message}`);
@@ -41,6 +32,7 @@ export class DeviceService {
     });
   }
 
+  // Função para obter o status atual do dispositivo
   getStatus(): string {
     return this.deviceState;
   }
