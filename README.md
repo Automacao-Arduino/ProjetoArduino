@@ -11,31 +11,7 @@ Frontend com React
 Visão Geral
 O projeto visa oferecer uma maneira prática e eficiente de controlar um dispositivo Arduino remotamente através de uma página web. Utilizando uma API RESTful, o sistema permite que o frontend envie comandos ao backend, que então são transmitidos ao Arduino, executando ações conforme solicitado.
 
-Estrutura de Diretórios
-A estrutura de diretórios do projeto segue uma abordagem modular para separar o frontend e o backend:
 
-
-ArduinoProjectControll
-├── backend               # Backend em NestJS para controle do Arduino
-│   ├── src
-│   │   ├── controllers   # Controladores que gerenciam as requisições
-│   │   ├── services      # Serviços que contêm a lógica de negócios
-│   │   ├── modules       # Módulos que organizam a estrutura do NestJS
-│   │   └── main.ts       # Arquivo de inicialização do NestJS
-│   ├── .gitignore        # Arquivo para ignorar dependências e logs
-│   ├── package.json      # Configuração das dependências do backend
-│   └── tsconfig.json     # Configurações do TypeScript para o backend
-├── frontend              # Frontend em React para a interface web
-│   ├── src
-│   │   ├── components    # Componentes React da interface
-│   │   ├── App.tsx       # Componente principal da aplicação
-│   │   └── index.tsx     # Arquivo de entrada do React
-│   ├── .gitignore        # Arquivo para ignorar dependências e builds
-│   ├── package.json      # Configuração das dependências do frontend
-│   └── tsconfig.json     # Configurações do TypeScript para o frontend
-├── package.json          # Configuração principal do projeto
-├── README.md             # Documentação do projeto
-└── tsconfig.json         # Configurações globais do TypeScript
 
 Descrição dos Diretórios
 backend/: Contém o código do servidor NestJS. Este backend é responsável por expor os endpoints que permitem enviar comandos ao Arduino e obter o estado atual do dispositivo.
