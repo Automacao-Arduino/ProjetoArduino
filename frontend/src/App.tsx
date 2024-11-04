@@ -1,24 +1,10 @@
-import React from 'react';
-import Button from './components/button';
-import AntButton from './components/antButton';
-
-// Função App com os botões e texto
-export function App() {
-  // Função de clique para os botões
-  const handleClick = () => {
-    alert('Botão clicado!');
-  };
-
+function App() {
   return (
-    <div>
-      <div className='justify-items-center p-5 m-6 bg-slate-100'>
-        <span className=' justify-center'> teste de divisão </span>
-        <span> segunda opção</span>
-      </div>
-      <div className="flex flex-col items-center justify-center h-screen space-y-4">
-        <Button label="Botão Primário" onClick={handleClick} variant="primary" size="large" />
-        <Button label="Botão Secundário" onClick={handleClick} variant="secondary" size="medium" />
-        <AntButton/>
+    <div className="w-screen h-screen bg-neutral-900 flex justify-center p-6">
+      <div className="bg-red-50">
+        <ul className="space-y-4 p-6 bg-slate-200 rounded-md shadow">
+          <h1 className="text-3xl text-red-500 font-bold text-center">Teste</h1>
+        </ul>
       </div>
     </div>
   );
