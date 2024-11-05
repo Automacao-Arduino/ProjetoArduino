@@ -2,7 +2,12 @@
 #define IR_RECEIVE_PIN 2
 #define LED_PIN 13
 
-const byte IR_RECEIVE_PIN = 2; //mudar o numero do pino conforme o inserido no arduino
+//Importante!!! colocar transmissor de infra vermelho no pino3!!!
+
+const byte IR_RECEIVE_PIN = 2; //pino que recebe o sinal
+const byte IR_SEND_PIN = 3; //pino que envia o sinal
+
+IRrecv irrecv(IR_RECEIVE_PIN); //inicializando classe IRrecv
 
 void enviarInfra(){
 
@@ -18,10 +23,14 @@ IrReceiver.begin(IR_RECEIVE_PIN, ENABLE_LED_FEEDBACK); //Inicializa pino onde ar
 
 void loop() {
 
-if(IrReceiver.decode == false){ //o método decode é utilizado para retornar info sobre o funcionamento do input
+if(IrReceiver.decode(&results) == false){ //o método decode é utilizado para retornar info sobre o funcionamento do input
+  
+  Serial.println("Erro! Sinal não reconhecido"); 
+  
+  }else{//caso sinal infra vermelho for reconhecido
 
-  //to do: incorporar mensagem de erro caso o script não reconhecer o input do controle
-  // caso reconhecer incorporar código para emitir o sinal infravermelho
-  }
+    enviarInfra();
+    
+    }
 
 }
