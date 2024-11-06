@@ -20,6 +20,9 @@ function ButtonCard({ ligarAr }) {
       <div className="space-y-4">
         <Button label="Ligar Ar Condicionado" onClick={ligarAr} variant="primary" size="large" />
         <h2 className="text-2xl font-medium text-center mb-4 text-black">Temperatura: 23°C</h2>
+        <div className="slider-temperatura w-full flex justify-center items-center p-4 pr-10">
+          <input type="range" min="1" max="100" value="50" className="slider w-3/4 h-2 bg-gray-300 rounded-lg appearance-none" id="myRange"></input>
+        </div>
       </div>
     </div>
   );
