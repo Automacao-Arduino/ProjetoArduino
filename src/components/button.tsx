@@ -6,10 +6,11 @@ interface ButtonProps {
   onClick: () => void; // Função chamada ao clicar no botão
   size?: 'small' | 'medium' | 'large'; // Tamanho do botão
   variant?: 'primary' | 'secondary'; // Variante do botão
+  disabled?: boolean;
 }
 
 // Criando o componente Button
-const Button: React.FC<ButtonProps> = ({ label, onClick, size = 'medium', variant = 'primary' }) => {
+const Button: React.FC<ButtonProps> = ({ label, onClick, size = 'medium', variant = 'primary',  disabled = false  }) => {
   // Estilos de botão baseados em tamanho e variante
   const sizeStyle = {
     small: 'px-2 py-1 text-sm',
@@ -26,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({ label, onClick, size = 'medium', varian
     <button
       onClick={onClick}
       className={`rounded ${sizeStyle} ${variantStyle} font-semibold transition-colors`}
+      disabled={disabled}
     >
       {label}
     </button>

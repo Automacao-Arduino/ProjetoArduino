@@ -6,6 +6,8 @@ import AntButton from './components/antButton';
 interface ButtonCardProps {
   ligarAr: () => void;
   tempAr: number;
+  aumentarTemp: () => void;
+  diminuirTemp: () => void;
 }
 
 // Componente Header aprimorado
@@ -19,7 +21,7 @@ function Header() {
 }
 
 // Componente ButtonCard para estilizar os botões em formato de card
-function ButtonCard({ ligarAr, tempAr }: ButtonCardProps) {
+function ButtonCard({ ligarAr, tempAr, aumentarTemp, diminuirTemp}: ButtonCardProps) {
   return (
     <div className="bg-cyan-400 shadow-md rounded-lg p-10 w-full max-w-md flex-grow">
       <h2 className="text-2xl font-medium text-center mb-1 text-black">Ar Condicionado</h2>
@@ -27,9 +29,9 @@ function ButtonCard({ ligarAr, tempAr }: ButtonCardProps) {
         <Button label="Ligar Ar Condicionado" onClick={ligarAr} variant="primary" size="large" />
         <h2 className="text-2xl font-medium text-center mb-4 text-black mt-3">Temperatura: </h2>
         <div className="flex items-center space-x-4">
-          <button className="bg-blue-500 text-white p-1 w-16 font-extrabold text-3xl rounded-full">+</button>
+          <Button label="-" onClick={diminuirTemp} variant="primary" size="large" disabled={tempAr > 28}/>
           <input className="size-8 text-center w-16" value={tempAr} readOnly />
-          <button className="bg-blue-500 text-white p-1 w-16 font-extrabold text-3xl rounded-full">-</button>
+          <Button label="+" onClick={aumentarTemp} variant="primary" size="large" disabled={tempAr < 18} />          
         </div>
       </div>
     </div>
@@ -79,12 +81,28 @@ export function App() {
     alert('Você diminuiu o volume!');
   };
 
+  const aumentarTemp = () => {
+    if(tempAr < 28){
+    setTempAr((prevTemp) => prevTemp + 1);
+    }else{
+      alert('Temperatura máxima alcançada!');
+    }
+  }
+
+  const diminuirTemp = () => {
+    if(tempAr > 18){
+    setTempAr((prevTemp) => prevTemp - 1);
+    }else{
+      alert('Temperatura mínima alcançada!');
+    }
+  }
+
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col justify-between">
       <Header />
       <main className="flex-grow flex items-center justify-center py-10 space-x-4 max-w-4xl mx-auto">
-        <ButtonCard ligarAr={ligarAr} tempAr={tempAr} /> {/* Passando tempAr para ButtonCard */}
-        <ButtonCard2 ligarSom={ligarSom} aumentarSom={aumentarSom} diminuirSom={diminuirSom} />
+        <ButtonCard ligarAr={ligarAr} tempAr={tempAr} aumentarTemp={aumentarTemp} diminuirTemp={diminuirTemp} /> 
+        <ButtonCard2 ligarSom={ligarSom} aumentarSom={aumentarSom} diminuirSom={diminuirSom} /> 
       </main>
       <Footer />
     </div>
