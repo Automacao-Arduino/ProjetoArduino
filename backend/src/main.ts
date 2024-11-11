@@ -13,11 +13,12 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document); // O Swagger estará disponível em http://localhost:3000/api
+  SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
-  console.log('Aplicação rodando em http://localhost:3000');
-  console.log('Swagger rodando em http://localhost:3000/api');
+  await app.listen(8000);
+  // função onde coloca a porta final
+  console.log('Aplicação rodando em http://localhost:/8000');
+  console.log('Swagger rodando em http://localhost:8000/api');
 }
 
 bootstrap();

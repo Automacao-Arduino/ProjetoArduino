@@ -1,9 +1,13 @@
 import React from 'react';
 
-const Headerpage = () => {
-  return (
-    <div className='bg-slate-200 h-20 w-full'>
+interface HeaderProps {
+  className?: string;
+}
 
+const Headerpage: React.FC<HeaderProps> = ({ className }) => {
+  return (
+    <div className={`bg-slate-200 w-full h-16 ${className || ''}`}>
+    
     </div>
   );
 };
