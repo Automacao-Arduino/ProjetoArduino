@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "prisma": "^5.22.0"
+  }
+}
+{
+  "name": "ArduinoProjectControll",
+  "version": "1.0.0",
+  "type": "module",
+}
