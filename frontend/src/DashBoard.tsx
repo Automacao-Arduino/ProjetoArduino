@@ -28,7 +28,7 @@ interface DashboardProps {
   initialUmid?: string;
   initialInstesidadeUmidificador?: number;
   initialUmidade?: number;
-  initialSom?: number; // Adiciona um valor inicial para o som
+  initialSom?: number;
 }
 
 export function Dashboard({
