@@ -89,8 +89,7 @@ export function Dashboard({
             <img src={sun} alt="Sun Icon" className="p-6" />
           </div>
           <div className="  w-fit flex flex-col justify-center " >
-            <span className="text-center"> Temperatura: {temperatura}°C</span>
-            <span className="text-center"> Umidade Relativa do Ar {umidade}%</span>
+            <span className="text-center"> Temperatura Do Ambiente: {temperatura}°C</span>
           </div>
         </div>
 
