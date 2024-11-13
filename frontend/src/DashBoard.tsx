@@ -67,9 +67,16 @@ export function Dashboard({
   const diminuirTemperaturaGeladeira = () => setTemperaturaGeladeira((temperaturaGeladeira) => (temperaturaGeladeira > 5 ? temperaturaGeladeira - 1: temperaturaGeladeira));
   const aumentarSom = () => setSom((som) => (som < 50 ? som + 1 : som));
   const diminuirSom = () => setSom((som) => (som >= 1 ? som - 1: som));
-  const aumentarUmidade = () => setUmidIntensidade((umidIntensidade) => (umidIntensidade < 10 ? umidIntensidade + 1 : umidIntensidade));
-  const diminuirUmidade = () => setUmidIntensidade((umidIntensidade) => (umidIntensidade > 1 ? umidIntensidade - 1 : umidIntensidade));
-
+  const aumentarUmidade = () => {
+    if(umidLigado){
+    setUmidIntensidade((umidIntensidade) => (umidIntensidade < 10 ? umidIntensidade + 1 : umidIntensidade));
+  }
+}
+const diminuirUmidade = () =>{
+  if(umidLigado){
+  setUmidIntensidade((umidIntensidade) => (umidIntensidade > 1 ? umidIntensidade - 1 : umidIntensidade));
+  }
+}
   // Funções para alternar o estado de som, cafeteira, ar-condicionado e luz
   const toggleSom = () => setSomLigado(!somLigado); 
   const toggleArCondicionado = () => setArCondicionadoLigado(!arCondicionadoLigado);
