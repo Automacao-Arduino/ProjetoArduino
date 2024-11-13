@@ -14,6 +14,7 @@ interface DashboardProps {
   initialTemperatura?: number;
   initialTemperaturaGeladeira?: number;
   initialLuz?: string;
+  initialCafeteira?: string;
   initialUmidificador?: string;
   initialIntensidadeUmidificador?: number;
   initialUmidade?: number;
@@ -25,6 +26,7 @@ interface DashboardProps {
   initialTemperatura?: number;
   initialTemperaturaGeladeira?: number;
   initialLuz?: string;
+  initialCafeteira?: string;
   initialUmid?: string;
   initialInstesidadeUmidificador?: number;
   initialUmidade?: number;
@@ -35,6 +37,7 @@ export function Dashboard({
   initialTemperatura = 25,
   initialTemperaturaGeladeira = 3,
   initialLuz = 'Desligado',
+  initialCafeteira = 'Desligado',
   initialUmid = 'Desligado',
   initialInstesidadeUmidificador = 0,
   initialUmidade = 60,
@@ -43,36 +46,43 @@ export function Dashboard({
   const [temperatura, setTemperatura] = useState(initialTemperatura);
   const [temperaturaGeladeira, setTemperaturaGeladeira] = useState(initialTemperaturaGeladeira);
   const [luz, setLuz] = useState(initialLuz);
+  const [cafeteira, setCafeteira] = useState(initialCafeteira);
   const [umid, setUmid] = useState(initialUmid);
   const [umidIntensidade, setUmidIntensidade] = useState(initialInstesidadeUmidificador);
   const [umidade] = useState(initialUmidade);
   const [som, setSom] = useState(initialSom);
 
-  // Novos estados para ligar/desligar o som, ar-condicionado e luz
+  // Novos estados para ligar/desligar o som, ar-condicionado, cafeteira e luz
   const [somLigado, setSomLigado] = useState(false);
   const [arCondicionadoLigado, setArCondicionadoLigado] = useState(false);
   const [geladeiraLigado, setGeladeiraLigado] = useState(false);
   const [luzLigado, setLuzLigado] = useState(false);
+  const [cafeteiraLigado, setCafeteiraLigado] = useState(false);
   const [umidLigado, setUmidLigado] = useState(false);
 
   // Funções para ajustar a temperatura e o volume
-  const aumentarTemperatura = () => setTemperatura(temperatura + 1);
-  const diminuirTemperatura = () => setTemperatura(temperatura - 1);
-  const aumentarTemperaturaGeladeira = () => setTemperaturaGeladeira(temperaturaGeladeira + 1);
-  const diminuirTemperaturaGeladeira = () => setTemperaturaGeladeira(temperaturaGeladeira - 1);
-  const aumentarSom = () => setSom(som + 1);
-  const diminuirSom = () => setSom(som - 1);
-  const aumentarUmidade = () => setUmidIntensidade(umidIntensidade + 1);
-  const diminuirUmidade = () => setUmidIntensidade(umidIntensidade - 1);
+  const aumentarTemperatura = () => setTemperatura((temperatura) => (temperatura < 26 ? temperatura +1 : temperatura));
+  const diminuirTemperatura = () => setTemperatura((temperatura) => (temperatura > 17 ? temperatura -1 : temperatura));
+  const aumentarTemperaturaGeladeira = () => setTemperaturaGeladeira((temperaturaGeladeira) => (temperaturaGeladeira < 8 ? temperaturaGeladeira + 1: temperaturaGeladeira));
+  const diminuirTemperaturaGeladeira = () => setTemperaturaGeladeira((temperaturaGeladeira) => (temperaturaGeladeira > 5 ? temperaturaGeladeira - 1: temperaturaGeladeira));
+  const aumentarSom = () => setSom((som) => (som < 50 ? som + 1 : som));
+  const diminuirSom = () => setSom((som) => (som >= 1 ? som - 1: som));
+  const aumentarUmidade = () => setUmidIntensidade((umidIntensidade) => (umidIntensidade < 10 ? umidIntensidade + 1 : umidIntensidade));
+  const diminuirUmidade = () => setUmidIntensidade((umidIntensidade) => (umidIntensidade > 1 ? umidIntensidade - 1 : umidIntensidade));
 
-  // Funções para alternar o estado de som, ar-condicionado e luz
-  const toggleSom = () => setSomLigado(!somLigado);
+  // Funções para alternar o estado de som, cafeteira, ar-condicionado e luz
+  const toggleSom = () => setSomLigado(!somLigado); 
   const toggleArCondicionado = () => setArCondicionadoLigado(!arCondicionadoLigado);
   const toggleGeladeira = () => setArCondicionadoLigado(!geladeiraLigado);
   const toggleLuz = () => {
     setLuzLigado(!luzLigado);
     setLuzLigado(!luzLigado);
     setLuz(prevLuz => (prevLuz === 'Desligado' ? 'Ligado' : 'Desligado'));
+  }
+  const toggleCafeteira = () => {
+    setCafeteiraLigado(!cafeteiraLigado);
+    setCafeteiraLigado(!cafeteiraLigado);
+    setCafeteira(prevCafeteira => (prevCafeteira === 'Desligado' ? 'Ligado' : 'Desligado'));
   }
   const toggleUmid = () =>{
     setUmidLigado(!umidLigado);
@@ -197,12 +207,12 @@ export function Dashboard({
             <img src={coffe} alt="luz icon" className="p-4" />
           </div>
           <div className="w-full flex flex-col justify-center items-center ">
-            <span className="text-center"> Cafeteira: </span>
+            <span className="text-center"> Cafeteira: {cafeteira} </span>
           </div>
         </div>
   
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
-        <AntButton onClick={toggleLuz} className="rounded-full w-10 h-10 flex items-center justify-center">
+        <AntButton onClick={toggleCafeteira} className="rounded-full w-10 h-10 flex items-center justify-center">
             <img src={on} alt="on Icon" className="size-max" />
         </AntButton>
         </div>
