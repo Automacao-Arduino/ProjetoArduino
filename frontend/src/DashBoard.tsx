@@ -35,7 +35,7 @@ interface DashboardProps {
 
 export function Dashboard({
   initialTemperatura = 25,
-  initialTemperaturaGeladeira = 3,
+  initialTemperaturaGeladeira = 5,
   initialLuz = 'Desligado',
   initialCafeteira = 'Desligado',
   initialUmid = 'Desligado',
@@ -116,7 +116,7 @@ export function Dashboard({
 
       {/*Card Som*/}
       <div className="rounded-2xl  m-5 flex flex-col w-full h-full overflow-hidden border-4 bg-white">
-        <div className="h-4/6  rounded-t-2xl p-4 flex ">
+       <div className="h-4/6  rounded-t-2xl p-4 flex ">
           <div className="flex justify-center items-center  w-1/3">
             <img src={sound} alt="sound Icon" className="p-4" />
           </div>
@@ -126,7 +126,7 @@ export function Dashboard({
           </div>
         </div>
   
-        <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-white">
+        <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
         <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl " onClick={diminuirSom}>-</AntButton>
         <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={aumentarSom}>+</AntButton>
         <AntButton
@@ -170,7 +170,7 @@ export function Dashboard({
           </div>
         </div>
   
-        <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
+        <div className="h-2/6 px-16  rounded-b-2xl flex justify-center items-center bg-black">
         <AntButton onClick={toggleLuz} className="rounded-full w-10 h-10 flex items-center justify-center">
             <img src={on} alt="on Icon" className="size-max" />
         </AntButton>
@@ -211,7 +211,7 @@ export function Dashboard({
           </div>
         </div>
   
-        <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
+        <div className="h-2/6 px-16  rounded-b-2xl flex justify-center items-center bg-black">
         <AntButton onClick={toggleCafeteira} className="rounded-full w-10 h-10 flex items-center justify-center">
             <img src={on} alt="on Icon" className="size-max" />
         </AntButton>
