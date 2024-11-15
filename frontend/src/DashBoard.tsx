@@ -8,7 +8,7 @@ import bulb from  "./sgv/bulb.svg"
 import umidificador from  "./sgv/umidificador.svg"
 import coffe from "./sgv/coffe.svg"
 import React, { useState } from 'react';
-
+import axios from 'axios';
 
 interface DashboardProps {
   initialTemperatura?: number;
@@ -80,12 +80,20 @@ const diminuirUmidade = () =>{
   // Funções para alternar o estado de som, cafeteira, ar-condicionado e luz
   const toggleSom = () => setSomLigado(!somLigado); 
   const toggleArCondicionado = () => setArCondicionadoLigado(!arCondicionadoLigado);
-  const toggleGeladeira = () => setArCondicionadoLigado(!geladeiraLigado);
-  const toggleLuz = () => {
-    setLuzLigado(!luzLigado);
-    setLuzLigado(!luzLigado);
-    setLuz(prevLuz => (prevLuz === 'Desligado' ? 'Ligado' : 'Desligado'));
-  }
+  const toggleGeladeira = () => setGeladeiraLigado(!geladeiraLigado);
+  
+  const toggleLuz = async () => {
+    const newState = luz === 'Desligado' ? 'Ligado' : 'Desligado';
+    setLuz(newState);
+
+    try {
+        await axios.post('http://localhost:3001/luz/toggle', { state: newState });
+        console.log(`Estado da luz enviado: ${newState}`);
+    } catch (error) {
+        console.error('Erro ao enviar estado da luz:', error);
+    }
+};
+
   const toggleCafeteira = () => {
     setCafeteiraLigado(!cafeteiraLigado);
     setCafeteiraLigado(!cafeteiraLigado);
