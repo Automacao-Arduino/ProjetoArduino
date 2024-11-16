@@ -7,8 +7,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model LuzState {
+
+model DeviceState {
   id        Int      @id @default(autoincrement())
-  state     String
-  timestamp DateTime @default(now())
+  device    String   
+  state     String   
+  createdAt DateTime @default(now()) 
 }

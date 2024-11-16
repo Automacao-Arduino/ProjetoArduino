@@ -3,107 +3,67 @@ import sun from "./sgv/sun.svg"
 import sound from "./sgv/sound.svg"
 import on from  "./sgv/on.svg"
 import play from  "./sgv/play.svg"
-import geladeira from  "./sgv/geladeira.svg"
+import geladeiraicon from  "./sgv/geladeiraicon.svg"
 import bulb from  "./sgv/bulb.svg"
-import umidificador from  "./sgv/umidificador.svg"
+import umidificadoricon from  "./sgv/umidificadoricon.svg"
 import coffe from "./sgv/coffe.svg"
 import React, { useState } from 'react';
 import axios from 'axios';
 
 interface DashboardProps {
-  initialTemperatura?: number;
-  initialTemperaturaGeladeira?: number;
+  //propriedades iniciais de dispositivos
+  initialAr?: string;
+  initialSom?: string;
+  initialGeladeira?: string;
   initialLuz?: string;
-  initialCafeteira?: string;
   initialUmidificador?: string;
-  initialIntensidadeUmidificador?: number;
-  initialUmidade?: number;
-  buttonClassName?: string; 
-  className?: string;
+  initialCafeteira?: string;
 }
 
 interface DashboardProps {
-  initialTemperatura?: number;
-  initialTemperaturaGeladeira?: number;
+  //propriedades iniciais de dispositivos
+  initialAr?: string;
+  initialSom?: string;
+  initialGeladeira?: string;
+  initialUmidificador?: string;
   initialLuz?: string;
   initialCafeteira?: string;
-  initialUmid?: string;
-  initialInstesidadeUmidificador?: number;
-  initialUmidade?: number;
-  initialSom?: number;
 }
 
 export function Dashboard({
-  initialTemperatura = 25,
-  initialTemperaturaGeladeira = 5,
+  //propriedades iniciais de dispositivos
+  initialAr = 'Desligado',
+  initialSom = 'Desligado',
+  initialGeladeira = 'Desligado',
+  initialUmidificador = 'Desligado',
   initialLuz = 'Desligado',
   initialCafeteira = 'Desligado',
-  initialUmid = 'Desligado',
-  initialInstesidadeUmidificador = 0,
-  initialUmidade = 60,
-  initialSom = 50,
 }: DashboardProps) {
-  const [temperatura, setTemperatura] = useState(initialTemperatura);
-  const [temperaturaGeladeira, setTemperaturaGeladeira] = useState(initialTemperaturaGeladeira);
-  const [luz, setLuz] = useState(initialLuz);
-  const [cafeteira, setCafeteira] = useState(initialCafeteira);
-  const [umid, setUmid] = useState(initialUmid);
-  const [umidIntensidade, setUmidIntensidade] = useState(initialInstesidadeUmidificador);
-  const [umidade] = useState(initialUmidade);
+  //declaração de aparelhos
+  const [ar, setAr] = useState(initialAr);
   const [som, setSom] = useState(initialSom);
+  const [luz, setLuz] = useState(initialLuz);
+  const [geladeira, setGeladeira] = useState(initialGeladeira);
+  const [umidificador, setUmidificador] = useState(initialUmidificador);
+  const [cafeteira, setCafeteira] = useState(initialCafeteira);
 
-  // Novos estados para ligar/desligar o som, ar-condicionado, cafeteira e luz
-  const [somLigado, setSomLigado] = useState(false);
-  const [arCondicionadoLigado, setArCondicionadoLigado] = useState(false);
-  const [geladeiraLigado, setGeladeiraLigado] = useState(false);
-  const [luzLigado, setLuzLigado] = useState(false);
-  const [cafeteiraLigado, setCafeteiraLigado] = useState(false);
-  const [umidLigado, setUmidLigado] = useState(false);
-
-  // Funções para ajustar a temperatura e o volume
-  const aumentarTemperatura = () => setTemperatura((temperatura) => (temperatura < 26 ? temperatura +1 : temperatura));
-  const diminuirTemperatura = () => setTemperatura((temperatura) => (temperatura > 17 ? temperatura -1 : temperatura));
-  const aumentarTemperaturaGeladeira = () => setTemperaturaGeladeira((temperaturaGeladeira) => (temperaturaGeladeira < 8 ? temperaturaGeladeira + 1: temperaturaGeladeira));
-  const diminuirTemperaturaGeladeira = () => setTemperaturaGeladeira((temperaturaGeladeira) => (temperaturaGeladeira > 5 ? temperaturaGeladeira - 1: temperaturaGeladeira));
-  const aumentarSom = () => setSom((som) => (som < 50 ? som + 1 : som));
-  const diminuirSom = () => setSom((som) => (som >= 1 ? som - 1: som));
-  const aumentarUmidade = () => {
-    if(umidLigado){
-    setUmidIntensidade((umidIntensidade) => (umidIntensidade < 10 ? umidIntensidade + 1 : umidIntensidade));
-  }
-}
-const diminuirUmidade = () =>{
-  if(umidLigado){
-  setUmidIntensidade((umidIntensidade) => (umidIntensidade > 1 ? umidIntensidade - 1 : umidIntensidade));
-  }
-}
-  // Funções para alternar o estado de som, cafeteira, ar-condicionado e luz
-  const toggleSom = () => setSomLigado(!somLigado); 
-  const toggleArCondicionado = () => setArCondicionadoLigado(!arCondicionadoLigado);
-  const toggleGeladeira = () => setGeladeiraLigado(!geladeiraLigado);
-  
-  const toggleLuz = async () => {
-    const newState = luz === 'Desligado' ? 'Ligado' : 'Desligado';
-    setLuz(newState);
+  // Função para ligar os aparelhos
+  const toggleDevice = async (
+    device: string,
+    currentState: string,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const newState = currentState === 'Desligado' ? 'Ligado' : 'Desligado';
+    setState(newState);
 
     try {
-        await axios.post('http://localhost:3001/luz/toggle', { state: newState });
-        console.log(`Estado da luz enviado: ${newState}`);
+      await axios.post(`http://localhost:3001/${device}/toggle`, { state: newState });
+      console.log(`Estado do ${device} enviado: ${newState}`);
     } catch (error) {
-        console.error('Erro ao enviar estado da luz:', error);
+      console.error(`Erro ao enviar estado do ${device}:`, error);
     }
-};
+  };
 
-  const toggleCafeteira = () => {
-    setCafeteiraLigado(!cafeteiraLigado);
-    setCafeteiraLigado(!cafeteiraLigado);
-    setCafeteira(prevCafeteira => (prevCafeteira === 'Desligado' ? 'Ligado' : 'Desligado'));
-  }
-  const toggleUmid = () =>{
-    setUmidLigado(!umidLigado);
-    setUmidLigado(!umidLigado);
-    setUmid(prevUmid => (prevUmid === 'Desligado' ? 'Ligado' : 'Desligado'))
-  }
 
   return (
     //Card ar-condicionado
@@ -114,15 +74,16 @@ const diminuirUmidade = () =>{
             <img src={sun} alt="Sun Icon" className="p-6" />
           </div>
           <div className="  w-fit flex flex-col justify-center " >
-            <span className="text-center"> Temperatura Do Ambiente: {temperatura}°C</span>
+            <span className="text-center"> Ar-condicionado: {ar}</span>
+            <span className="text-center"> Temperatura: 23º </span>
           </div>
         </div>
 
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={diminuirTemperatura}>-</AntButton>
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={aumentarTemperatura}>+</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>-</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>+</AntButton>
         <AntButton
-            onClick={toggleArCondicionado}
+            onClick={() => toggleDevice('ar', ar, setAr)}
             className="rounded-full w-10 h-10 flex items-center justify-center">
             <img src={on} alt="on Icon" className="size-max" />
           </AntButton>
@@ -136,16 +97,16 @@ const diminuirUmidade = () =>{
             <img src={sound} alt="sound Icon" className="p-4" />
           </div>
           <div className="w-full flex flex-col justify-center items-center ">
-            <h1 className="text-center ">Volume:</h1>
-            <span className="text-2xl mt-2">{som}</span>
+            <span className="text-center">Som: {som}</span>
+            <span className="text-center">Volume: 50</span>
           </div>
         </div>
   
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl " onClick={diminuirSom}>-</AntButton>
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={aumentarSom}>+</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl " onClick={() => {}}>-</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>+</AntButton>
         <AntButton
-            onClick={toggleSom}
+            onClick={() => toggleDevice('som', som, setSom)}
             className="rounded-full w-10 h-10  flex items-center justify-center">
             <img src={play} alt="play Icon" className="size-2" />
           </AntButton>
@@ -156,18 +117,19 @@ const diminuirUmidade = () =>{
       <div className="rounded-2xl  m-5 flex flex-col w-full h-full overflow-hidden border-4 bg-white">
         <div className="h-4/6  rounded-t-2xl p-4 flex ">
           <div className="flex justify-center items-center  w-1/3">
-            <img src={geladeira} alt="geladeira icon" className="p-4" />
+            <img src={geladeiraicon} alt="geladeira icon" className="p-4" />
           </div>
           <div className="w-full flex flex-col justify-center items-center ">
-            <span className="text-center"> Temperatura: {temperaturaGeladeira}°C</span>
+            <span className="text-center"> Geladeira: {geladeira}</span>
+            <span className="text-center">Temperatura: 4º</span>
           </div>
         </div>
 
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={diminuirTemperaturaGeladeira}>-</AntButton>
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={aumentarTemperaturaGeladeira} >+</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>-</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}} >+</AntButton>
         <AntButton
-            onClick={toggleGeladeira}
+            onClick={() => toggleDevice('geladeira', geladeira, setGeladeira)}
             className="rounded-full w-10 h-10 flex items-center justify-center">
             <img src={on} alt="on Icon" className="size-max" />
         </AntButton>
@@ -186,7 +148,7 @@ const diminuirUmidade = () =>{
         </div>
   
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-center items-center bg-black">
-        <AntButton onClick={toggleLuz} className="rounded-full w-10 h-10 flex items-center justify-center">
+        <AntButton onClick={() => toggleDevice('luz', luz, setLuz)} className="rounded-full w-10 h-10 flex items-center justify-center">
             <img src={on} alt="on Icon" className="size-max" />
         </AntButton>
         </div>
@@ -196,19 +158,19 @@ const diminuirUmidade = () =>{
       <div className="rounded-2xl  m-5 flex flex-col w-full h-full overflow-hidden border-4 bg-white">
         <div className="h-4/6  rounded-t-2xl p-4 flex ">
           <div className="flex justify-center items-center  w-1/3">
-            <img src={umidificador} alt="luz icon" className="p-4" />
+            <img src={umidificadoricon} alt="luz icon" className="p-4" />
           </div>
           <div className="w-full flex flex-col justify-center items-center ">
-            <span className="text-center"> Umidificador: {umid} </span>
-            <span className="text-center"> Intensidade: {umidIntensidade}</span>
-            <span className="text-center"> Umidade Relativa do Ar {umidade}%</span>
+            <span className="text-center"> Umidificador: {umidificador} </span>
+            <span className="text-center"> Intensidade: 0</span>
+            <span className="text-center"> Umidade Relativa do Ar 20%</span>
           </div>
         </div>
   
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={diminuirUmidade}>-</AntButton>
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={aumentarUmidade} >+</AntButton>
-        <AntButton onClick={toggleUmid} className="rounded-full w-10 h-10 flex items-center justify-center">
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>-</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}} >+</AntButton>
+        <AntButton onClick={() => toggleDevice('umidificador', umidificador, setUmidificador)} className="rounded-full w-10 h-10 flex items-center justify-center">
             <img src={on} alt="on Icon" className="size-max" />
         </AntButton>
         </div>
@@ -227,7 +189,7 @@ const diminuirUmidade = () =>{
         </div>
   
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-center items-center bg-black">
-        <AntButton onClick={toggleCafeteira} className="rounded-full w-10 h-10 flex items-center justify-center">
+        <AntButton onClick={() => toggleDevice('cafeteira', cafeteira, setCafeteira)} className="rounded-full w-10 h-10 flex items-center justify-center">
             <img src={on} alt="on Icon" className="size-max" />
         </AntButton>
         </div>

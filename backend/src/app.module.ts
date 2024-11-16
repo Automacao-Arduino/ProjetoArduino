@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { LuzModule } from './luz/luz.module';
+import { DeviceModule } from './device/device.module';
 
 @Module({
-  imports: [LuzModule],
+  imports: [ DeviceModule ],
 })
 export class AppModule {}
