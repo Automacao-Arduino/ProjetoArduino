@@ -1,4 +1,5 @@
-
+// src/components/header/index.tsx
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 function HeaderPage() {
@@ -27,11 +28,9 @@ function HeaderPage() {
         >
           Quarto
         </NavLink>
-        {/* Você pode adicionar outros links conforme implementa mais cômodos */}
       </div>
     </nav>
   );
 }
 
 export default HeaderPage;
-
