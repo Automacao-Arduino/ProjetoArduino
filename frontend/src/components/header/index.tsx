@@ -11,6 +11,7 @@ function HeaderPage() {
           <Nav.Link href="/suite" className="text-black hover:text-green-500 mx-3">Suíte</Nav.Link>
           <Nav.Link href="/cozinha" className="text-black hover:text-green-500 mx-3">Cozinha</Nav.Link>
           <Nav.Link href="/lavanderia" className="text-black hover:text-green-500 mx-3">Lavanderia</Nav.Link>
+          <Nav.Link href="/report" className="text-black hover:text-green-500 mx-3">Relatório</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

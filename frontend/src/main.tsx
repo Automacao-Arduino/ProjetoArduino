@@ -7,6 +7,7 @@ import Suite from './components/Pages/Suite';
 import Cozinha from './components/Pages/Cozinha'; // Página Cozinha
 import Lavanderia from './components/Pages/Lavanderia';
 import './global.css';
+import Report from './components/report/report';
 
 createRoot(document.getElementById('root')!).render(
   <Router>
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/suite" element={<Suite />} />
           <Route path="/cozinha" element={<Cozinha />} /> {/* Rota para Cozinha */}
           <Route path="/lavanderia" element={<Lavanderia />} />
+          <Route path="/report" element={<Report />} />
           <Route path="/" element={<Dashboard />} />
         </Routes>
       </div>

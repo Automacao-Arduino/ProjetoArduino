@@ -8,6 +8,7 @@ import Sala from './components/Pages/Sala'; // O componente da página Sala
 import Suite from './components/Pages/Suite'; // O componente da página Suíte
 import Cozinha from './components/Pages/Cozinha'; // O componente da página Cozinha
 import Lavanderia from './components/Pages/Lavanderia'; // O componente da página Lavanderia
+import Report from './components/report/report';
 
 // Função App com os botões e texto
 export function App() {
