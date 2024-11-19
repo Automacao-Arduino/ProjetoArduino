@@ -18,6 +18,11 @@ interface DashboardProps {
   initialLuz?: string;
   initialUmidificador?: string;
   initialCafeteira?: string;
+
+  //propriedades de botões de aumentar e diminuir
+  initialSomVolume?: number;
+  initialUmidificadorIntensidade?: number;
+  initialArTemperatura?: number;  
 }
 
 interface DashboardProps {
@@ -28,6 +33,11 @@ interface DashboardProps {
   initialUmidificador?: string;
   initialLuz?: string;
   initialCafeteira?: string;
+
+    //propriedades de botões de aumentar e diminuir
+    initialSomVolume?: number;
+    initialUmidificadorIntensidade?: number;
+    initialArTemperatura?: number;
 }
 
 export function Dashboard({
@@ -38,6 +48,11 @@ export function Dashboard({
   initialUmidificador = 'Desligado',
   initialLuz = 'Desligado',
   initialCafeteira = 'Desligado',
+
+  //propriedades de botões de aumentar e diminuir
+  initialSomVolume = 50,
+  initialUmidificadorIntensidade = 5,
+  initialArTemperatura = 23,
 }: DashboardProps) {
   //declaração de aparelhos
   const [ar, setAr] = useState(initialAr);
@@ -46,6 +61,11 @@ export function Dashboard({
   const [geladeira, setGeladeira] = useState(initialGeladeira);
   const [umidificador, setUmidificador] = useState(initialUmidificador);
   const [cafeteira, setCafeteira] = useState(initialCafeteira);
+
+  //declaração de estados iniciais de aparelhos
+  const [somVolume, setSomVolume] = useState(initialSomVolume);
+  const [umidificadorIntensidade, setUmidificadorIntensidade] = useState(initialUmidificadorIntensidade);
+  const [arTemperatura, setArTemperatura] = useState(initialArTemperatura);
 
   // Função para ligar os aparelhos
   const toggleDevice = async (
@@ -64,6 +84,22 @@ export function Dashboard({
     }
   };
 
+   // Função para aumentar e diminuir valores
+   const alterarPropriedade = (dispositivo: string, valor: number) => {
+    switch (dispositivo) {
+      case 'som':
+        setSomVolume((prev) => Math.max(0, Math.min(100, prev + valor)));
+        break;
+      case 'umidificador':
+        setUmidificadorIntensidade((prev) => Math.max(0, Math.min(10, prev + valor))); 
+        break;
+      case 'ar':
+        setArTemperatura((prev) => Math.max(16, Math.min(28, prev + valor))); 
+        break;
+      default:
+        console.error('Dispositivo não encontrado');
+    }
+  };
 
   return (
     //Card ar-condicionado
@@ -75,13 +111,13 @@ export function Dashboard({
           </div>
           <div className="  w-fit flex flex-col justify-center " >
             <span className="text-center"> Ar-condicionado: {ar}</span>
-            <span className="text-center"> Temperatura: 23º </span>
+            <span className="text-center"> Temperatura: {arTemperatura}º </span>
           </div>
         </div>
 
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>-</AntButton>
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>+</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={()=> alterarPropriedade('ar', -1)}>-</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={()=> alterarPropriedade('ar', +1)}>+</AntButton>
         <AntButton
             onClick={() => toggleDevice('ar', ar, setAr)}
             className="rounded-full w-10 h-10 flex items-center justify-center">
@@ -98,13 +134,13 @@ export function Dashboard({
           </div>
           <div className="w-full flex flex-col justify-center items-center ">
             <span className="text-center">Som: {som}</span>
-            <span className="text-center">Volume: 50</span>
+            <span className="text-center">Volume: {somVolume}</span>
           </div>
         </div>
   
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl " onClick={() => {}}>-</AntButton>
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>+</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl " onClick={() => alterarPropriedade('som', -5)}>-</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => alterarPropriedade('som', 5)}>+</AntButton>
         <AntButton
             onClick={() => toggleDevice('som', som, setSom)}
             className="rounded-full w-10 h-10  flex items-center justify-center">
@@ -125,9 +161,7 @@ export function Dashboard({
           </div>
         </div>
 
-        <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>-</AntButton>
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}} >+</AntButton>
+        <div className="h-2/6 px-16  rounded-b-2xl flex justify-center items-center bg-black">
         <AntButton
             onClick={() => toggleDevice('geladeira', geladeira, setGeladeira)}
             className="rounded-full w-10 h-10 flex items-center justify-center">
@@ -162,14 +196,14 @@ export function Dashboard({
           </div>
           <div className="w-full flex flex-col justify-center items-center ">
             <span className="text-center"> Umidificador: {umidificador} </span>
-            <span className="text-center"> Intensidade: 0</span>
+            <span className="text-center"> Intensidade: {umidificadorIntensidade}</span>
             <span className="text-center"> Umidade Relativa do Ar 20%</span>
           </div>
         </div>
   
         <div className="h-2/6 px-16  rounded-b-2xl flex justify-between items-center bg-black">
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}}>-</AntButton>
-        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => {}} >+</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => alterarPropriedade('umidificador', -1)}>-</AntButton>
+        <AntButton className="rounded-full w-10 pb-[10px] h-10 flex items-center justify-center text-3xl" onClick={() => alterarPropriedade('umidificador', 1)} >+</AntButton>
         <AntButton onClick={() => toggleDevice('umidificador', umidificador, setUmidificador)} className="rounded-full w-10 h-10 flex items-center justify-center">
             <img src={on} alt="on Icon" className="size-max" />
         </AntButton>
