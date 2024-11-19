@@ -1,23 +1,18 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { DeviceService } from './device.service';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('arduino')
-@Controller('device')
+@Controller(':device')
 export class DeviceController {
   constructor(private readonly deviceService: DeviceService) {}
 
-  @Post('control')
-  @ApiOperation({ summary: 'Enviar comando para o Arduino' })
-  async controlDevice(@Body('command') command: string): Promise<{ message: string }> {
-    const message = await this.deviceService.sendCommand(command);
-    return { message };
+  @Post('toggle')
+  async toggleDevice(
+    @Param('device') device: string,
+    @Body() body: { state: string },
+  ): Promise<string> {
+    const { state } = body;
+    await this.deviceService.toggleDevice(device, state);
+    return `${device} agora está ${state}`;
   }
 
-  @Get('status')
-  @ApiOperation({ summary: 'Obter o status atual do Arduino' })
-  getStatus(): { state: string } {
-    const state = this.deviceService.getStatus();
-    return { state };
-  }
 }

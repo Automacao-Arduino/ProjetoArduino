@@ -3,7 +3,7 @@ import { DeviceService } from './device.service';
 import { DeviceController } from './device.controller';
 
 @Module({
-  controllers: [DeviceController],
   providers: [DeviceService],
+  controllers: [DeviceController],
 })
 export class DeviceModule {}

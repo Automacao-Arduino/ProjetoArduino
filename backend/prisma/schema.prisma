@@ -1,0 +1,16 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model DeviceState {
+  id        Int      @id @default(autoincrement())
+  device    String   
+  state     String   
+  createdAt DateTime @default(now()) 
+}
