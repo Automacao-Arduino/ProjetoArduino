@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { DeviceService } from './device.service';
 
 @Controller(':device')
@@ -14,4 +14,5 @@ export class DeviceController {
     await this.deviceService.toggleDevice(device, state);
     return `${device} agora está ${state}`;
   }
+
 }
