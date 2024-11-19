@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HeaderPage from './components/header/index';
-import Dashboard from './DashBoard';
+import PaginaInicial from './components/Pages/PaginaInicial'
 import Sala from './components/Pages/Sala';
 import Suite from './components/Pages/Suite';
 import Cozinha from './components/Pages/Cozinha'; // Página Cozinha
@@ -20,7 +20,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/cozinha" element={<Cozinha />} /> {/* Rota para Cozinha */}
           <Route path="/lavanderia" element={<Lavanderia />} />
           <Route path="/report" element={<Report />} />
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<PaginaInicial />} />
         </Routes>
       </div>
     </div>

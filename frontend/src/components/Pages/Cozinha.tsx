@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import AntButton from "../antButton";
 import axios from 'axios';
+import on from  "../../sgv/on.svg";
+import geladeiraicon from  "../../sgv/geladeiraicon.svg";
+import coffe from "../../sgv/coffe.svg"
+import bulb from "../../sgv/bulb.svg"
 
 interface CozinhaProps {
   initialGeladeira?: string;
@@ -37,57 +41,60 @@ export function Cozinha({
   return (
     <div className="w-full h-full grid grid-cols-3 gap-4 p-12">
       {/* Card Geladeira */}
-      <div className="rounded-2xl m-5 flex flex-col w-full h-full overflow-hidden border-4 bg-white">
-        <div className="h-4/6 rounded-t-2xl p-4 flex">
-          <div className="w-full flex flex-col justify-center items-center">
-            <span className="text-center">Geladeira: {geladeira}</span>
+      <div className="rounded-2xl  m-5 flex flex-col w-full h-full overflow-hidden border-4 bg-white">
+        <div className="h-4/6  rounded-t-2xl p-4 flex ">
+          <div className="flex justify-center items-center  w-1/3">
+            <img src={geladeiraicon} alt="geladeira icon" className="p-4" />
+          </div>
+          <div className="w-full flex flex-col justify-center items-center ">
+            <span className="text-center"> Geladeira: {geladeira}</span>
             <span className="text-center">Temperatura: 4º</span>
           </div>
         </div>
 
-        <div className="h-2/6 px-16 rounded-b-2xl flex justify-center items-center bg-black">
-          <AntButton
+        <div className="h-2/6 px-16  rounded-b-2xl flex justify-center items-center bg-black">
+        <AntButton
             onClick={() => toggleDevice('geladeira', geladeira, setGeladeira)}
-            className="rounded-full w-10 h-10 flex items-center justify-center"
-          >
-            On/Off
-          </AntButton>
+            className="rounded-full w-10 h-10 flex items-center justify-center">
+            <img src={on} alt="on Icon" className="size-max" />
+        </AntButton>
         </div>
       </div>
+      
 
       {/* Card Cafeteira */}
-      <div className="rounded-2xl m-5 flex flex-col w-full h-full overflow-hidden border-4 bg-white">
-        <div className="h-4/6 rounded-t-2xl p-4 flex">
-          <div className="w-full flex flex-col justify-center items-center">
-            <span className="text-center">Cafeteira: {cafeteira}</span>
+      <div className="rounded-2xl  m-5 flex flex-col w-full h-full overflow-hidden border-4 bg-white">
+        <div className="h-4/6  rounded-t-2xl p-4 flex ">
+          <div className="flex justify-center items-center  w-1/3">
+            <img src={coffe} alt="luz icon" className="p-4" />
+          </div>
+          <div className="w-full flex flex-col justify-center items-center ">
+            <span className="text-center"> Cafeteira: {cafeteira} </span>
           </div>
         </div>
-
-        <div className="h-2/6 px-16 rounded-b-2xl flex justify-center items-center bg-black">
-          <AntButton
-            onClick={() => toggleDevice('cafeteira', cafeteira, setCafeteira)}
-            className="rounded-full w-10 h-10 flex items-center justify-center"
-          >
-            On/Off
-          </AntButton>
+  
+        <div className="h-2/6 px-16  rounded-b-2xl flex justify-center items-center bg-black">
+        <AntButton onClick={() => toggleDevice('cafeteira', cafeteira, setCafeteira)} className="rounded-full w-10 h-10 flex items-center justify-center">
+            <img src={on} alt="on Icon" className="size-max" />
+        </AntButton>
         </div>
       </div>
 
       {/* Card Luz */}
-      <div className="rounded-2xl m-5 flex flex-col w-full h-full overflow-hidden border-4 bg-white">
-        <div className="h-4/6 rounded-t-2xl p-4 flex">
-          <div className="w-full flex flex-col justify-center items-center">
-            <span className="text-center">Iluminação: {luz}</span>
+      <div className="rounded-2xl  m-5 flex flex-col w-full h-full overflow-hidden border-4 bg-white">
+        <div className="h-4/6  rounded-t-2xl p-4 flex ">
+          <div className="flex justify-center items-center  w-1/3">
+            <img src={bulb} alt="luz icon" className="p-4" />
+          </div>
+          <div className="w-full flex flex-col justify-center items-center ">
+            <span className="text-center"> Iluminação: {luz} </span>
           </div>
         </div>
-
-        <div className="h-2/6 px-16 rounded-b-2xl flex justify-center items-center bg-black">
-          <AntButton
-            onClick={() => toggleDevice('luz', luz, setLuz)}
-            className="rounded-full w-10 h-10 flex items-center justify-center"
-          >
-            On/Off
-          </AntButton>
+  
+        <div className="h-2/6 px-16  rounded-b-2xl flex justify-center items-center bg-black">
+        <AntButton onClick={() => toggleDevice('luz', luz, setLuz)} className="rounded-full w-10 h-10 flex items-center justify-center">
+            <img src={on} alt="on Icon" className="size-max" />
+        </AntButton>
         </div>
       </div>
     </div>
