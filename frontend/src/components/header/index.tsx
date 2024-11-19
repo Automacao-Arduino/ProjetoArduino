@@ -44,7 +44,7 @@ return (
         <Nav.Link 
           href="/report" 
           className={`text-black hover:text-green-500 mx-3 ${
-            location.pathname === "/lavanderia" ? "font-bold text-green-500" : ""
+            location.pathname === "/report" ? "font-bold text-green-500" : ""
           }`}
         >
           Relatorio
